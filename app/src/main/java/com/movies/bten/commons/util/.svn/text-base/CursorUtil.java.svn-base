@@ -1,0 +1,81 @@
+package com.negorp.commons.util;
+
+import android.database.Cursor;
+
+
+public class CursorUtil {
+    private static final String DEBUG_TAG = "CursorUtil";
+
+
+    public static String getOptString(Cursor c, String columnName, String defaultValue) {
+        int columnIndex = -1;
+        if (c != null && !c.isAfterLast() && ((columnIndex = c.getColumnIndex(columnName)) != -1)) {
+            return c.getString(columnIndex);
+        } else {
+            return defaultValue;
+        }
+    }
+
+    public static Long getOptLong(Cursor c, String columnName, Long defaultValue) {
+        int columnIndex = -1;
+        if (c != null && !c.isAfterLast() && ((columnIndex = c.getColumnIndex(columnName)) != -1)) {
+            return c.getLong(columnIndex);
+        } else {
+            return defaultValue;
+        }
+    }
+
+    public static Double getOptDouble(Cursor c, String columnName, Double defaultValue) {
+        int columnIndex = -1;
+        if (c != null && !c.isAfterLast() && ((columnIndex = c.getColumnIndex(columnName)) != -1)) {
+            return c.getDouble(columnIndex);
+        } else {
+            return defaultValue;
+        }
+    }
+
+
+    public static Integer getOptInteger(Cursor c, String columnName, Integer defaultValue) {
+        int columnIndex = -1;
+        if (c != null && !c.isAfterLast() && ((columnIndex = c.getColumnIndex(columnName)) != -1)) {
+            return c.getInt(columnIndex);
+        } else {
+            return defaultValue;
+        }
+    }
+
+
+    public static boolean close(Cursor c) {
+        try {
+            if (c != null) {
+                c.close();
+                return true;
+            }
+        } catch (Throwable t) {
+        }
+        return false;
+    }
+
+    public static void readCursor(Cursor cursor, String cursorName) {
+        readCursor(cursor, cursorName, true);
+    }
+
+    public static void readCursor(Cursor cursor, String cursorName, boolean closeCursor) {
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                AppLog.info(DEBUG_TAG, "********** START [" + cursorName + "] **********");
+
+                int totalColumns = cursor.getColumnCount();
+                for (int i = 0; i < totalColumns; i++) {
+                    AppLog.info(DEBUG_TAG, cursor.getColumnName(i) + "=" + cursor.getString(i));
+                }
+                AppLog.info(DEBUG_TAG, "*********** END [" + cursorName + "] ***********");
+            } while (cursor.moveToNext());
+
+            if (closeCursor)
+                cursor.close();
+        } else {
+            AppLog.warning(DEBUG_TAG, cursorName + " is null!");
+        }
+    }
+}

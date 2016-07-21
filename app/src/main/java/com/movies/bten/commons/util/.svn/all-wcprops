@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/negorp/commons.svn/!svn/ver/9/src/com/negorp/commons/util
+END
+JsonUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/negorp/commons.svn/!svn/ver/9/src/com/negorp/commons/util/JsonUtil.java
+END
+MessageUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/negorp/commons.svn/!svn/ver/1/src/com/negorp/commons/util/MessageUtil.java
+END
+CursorUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/negorp/commons.svn/!svn/ver/1/src/com/negorp/commons/util/CursorUtil.java
+END
+ResourcesUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/negorp/commons.svn/!svn/ver/1/src/com/negorp/commons/util/ResourcesUtil.java
+END
+TimeFormatUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/negorp/commons.svn/!svn/ver/9/src/com/negorp/commons/util/TimeFormatUtil.java
+END
+DeviceInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/negorp/commons.svn/!svn/ver/1/src/com/negorp/commons/util/DeviceInfo.java
+END
+AppLog.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/negorp/commons.svn/!svn/ver/1/src/com/negorp/commons/util/AppLog.java
+END
+StringUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/negorp/commons.svn/!svn/ver/1/src/com/negorp/commons/util/StringUtil.java
+END
+JsonObjectInterface.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/negorp/commons.svn/!svn/ver/1/src/com/negorp/commons/util/JsonObjectInterface.java
+END
+AppPreferenceManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/negorp/commons.svn/!svn/ver/1/src/com/negorp/commons/util/AppPreferenceManager.java
+END

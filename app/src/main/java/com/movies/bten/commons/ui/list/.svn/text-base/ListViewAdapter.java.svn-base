@@ -1,0 +1,326 @@
+package com.negorp.commons.ui.list;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import com.negorp.commons.util.AppLog;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.util.List;
+
+
+public class ListViewAdapter<T, E extends ListItemView<T>> extends BaseAdapter {
+    private final String DEBUG_TAG;
+    private int listItemLayout;
+    @SuppressWarnings("unused")
+    private Context context;
+    private LayoutInflater layoutInflater;
+    private List<T> data;
+    private View selectedView;
+    private int selectedPosition;
+    private int normalBackgroundID;
+    private int selectedBackgroundID;
+    private Class<E> aClass;
+    private ListItemViewDelegate delegate;
+    private boolean makeSelection;
+
+
+    @SuppressWarnings({"unchecked", "hiding"})
+    private <E extends ListItemView<T>> E createListItemView(Class<E> aClass, Object... values) {
+        try {
+            Field[] fields = aClass.getDeclaredFields();
+
+            Class<?>[] types = new Class<?>[fields.length];
+
+            int index = 0;
+            for (Field field : fields) {
+//            	AppLog.warning("fields", field.getName()+" ");
+
+                types[index] = field.getType();
+                index++;
+            }
+            Constructor<?>[] constructors = aClass.getDeclaredConstructors();
+
+            return (E) constructors[0].newInstance(values);
+        } catch (InstantiationException ex) {
+            System.err.println("InstantiationException");
+        } catch (IllegalAccessException ex) {
+            System.err.println("IllegalAccessException");
+        } catch (IllegalArgumentException ex) {
+            System.err.println("IllegalArgumentException");
+        } catch (Exception ex) {
+            AppLog.error(DEBUG_TAG, ex);
+        }
+        return null;
+    }
+
+
+    public ListViewAdapter(Context context, Class<E> aClass, ListItemViewDelegate delegate,
+                           int listItemLayout, List<T> listData, int normalBackgroundID, int selectedBackgroundID) {
+        DEBUG_TAG = this.getClass().getSimpleName();
+
+        this.context = context;
+        this.aClass = aClass;
+        this.delegate = delegate;
+
+        //layoutInflater = LayoutInflater.from(context);
+        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        this.listItemLayout = listItemLayout;
+
+        this.data = listData;
+//		this.data = new ArrayList<T>();
+//		for (T dataItem : listData) {
+//			data.add(dataItem);
+//		}
+
+        this.normalBackgroundID = normalBackgroundID;
+        this.selectedBackgroundID = selectedBackgroundID;
+
+        selectedPosition = -1;
+        makeSelection = false;
+    }
+
+
+    // For this case the selected position never is modified
+    public void addListItem(T dataItem, boolean notifyDataSetChanged) {
+        data.add(dataItem);
+
+        if (notifyDataSetChanged) {
+            this.notifyDataSetChanged();
+        }
+    }
+
+
+    // For this case the selected position is modified
+    public void addListItem(T dataItem, int position, boolean notifyDataSetChanged) {
+        data.add(position, dataItem);
+
+        if (selectedPosition >= position) {
+            selectedPosition++;
+        }
+
+//		AppLog.info("", "SelectedPositon:"+selectedPosition);
+
+        if (notifyDataSetChanged) {
+            this.notifyDataSetChanged();
+        }
+    }
+
+
+    // For this case the selected position is modified
+    public void removeListItem(int position, boolean notifyDataSetChanged) {
+        data.remove(position);
+
+        if (selectedPosition > position) {
+            selectedPosition--;
+        } else if (selectedPosition == position) {
+            selectedPosition = -1;
+            selectedView = null;
+        }
+
+//		AppLog.info("", "SelectedPositon:"+selectedPosition);
+
+        if (notifyDataSetChanged) {
+            this.notifyDataSetChanged();
+        }
+    }
+
+
+    // For this case the selected position is modified
+    public void selectListItem(int position) {
+        selectedPosition = position;
+
+        if (selectedView != null) {
+            selectedView.setBackgroundResource(normalBackgroundID);
+            ListItemView<T> listItemView = getViewHolder(selectedView);
+            listItemView.deselectListItemViewUI();
+            //((ViewHolder)selectedView.getTag()).image.setImageResource(R.drawable.radio_button_normal);
+        } else {
+            AppLog.warning("", "SelectedView is null!");
+        }
+
+//		AppLog.info("", "SelectedPositon:"+selectedPosition);
+        selectedView = null;
+
+        makeSelection = true;
+        this.notifyDataSetChanged();
+    }
+
+
+    // For this case the selected position is modified
+    public void selectListItemView(int position) {
+        selectedPosition = position;
+
+        if (selectedView != null) {
+            selectedView.setBackgroundResource(normalBackgroundID);
+            ListItemView<T> listItemView = getViewHolder(selectedView);
+            listItemView.deselectListItemViewUI();
+            //((ViewHolder)selectedView.getTag()).image.setImageResource(R.drawable.radio_button_normal);
+        } else {
+            AppLog.warning("", "SelectedView is null!");
+        }
+
+//		AppLog.info("", "SelectedPositon:"+selectedPosition);
+        selectedView = null;
+
+        this.notifyDataSetChanged();
+    }
+
+
+    // Deselect the current selected item
+    public void deselectListItem() {
+        selectedPosition = -1;
+        selectedView = null;
+
+        this.notifyDataSetChanged();
+    }
+
+
+    // For this case the selected position is modified
+    public void previousListItem() {
+        if (selectedPosition >= 0) {
+            selectedPosition--;
+
+            if (selectedView != null) {
+                selectedView.setBackgroundResource(normalBackgroundID);
+                ListItemView<T> listItemView = getViewHolder(selectedView);
+                listItemView.deselectListItemViewUI();
+                //((ViewHolder)selectedView.getTag()).image.setImageResource(R.drawable.radio_button_normal);
+            } else {
+                AppLog.warning("", "SelectedView is null!");
+            }
+
+//			AppLog.info("", "SelectedPositon:"+selectedPosition);
+            selectedView = null;
+
+            makeSelection = true;
+            this.notifyDataSetChanged();
+        }
+    }
+
+
+    // For this case the selected position is modified
+    public void nextListItem() {
+        if (selectedPosition < data.size()) {
+            selectedPosition++;
+
+            if (selectedView != null) {
+                selectedView.setBackgroundResource(normalBackgroundID);
+                ListItemView<T> listItemView = getViewHolder(selectedView);
+                listItemView.deselectListItemViewUI();
+                //((ViewHolder)selectedView.getTag()).image.setImageResource(R.drawable.radio_button_normal);
+            } else {
+                AppLog.warning("", "SelectedView is null!");
+            }
+
+//			AppLog.info("", "SelectedPositon:"+selectedPosition);
+            selectedView = null;
+
+            makeSelection = true;
+            this.notifyDataSetChanged();
+        }
+    }
+
+
+    public int getSelectedPosition() {
+        return selectedPosition;
+    }
+
+
+    public int getCount() {
+        if (data == null)
+            return 0;
+        return data.size();
+    }
+
+
+    public Object getItem(int position) {
+//		AppLog.debug("ListViewAdapter", "GetItem");
+        return position;
+    }
+
+
+    public long getItemId(int position) {
+//		AppLog.debug("ListViewAdapter", "GetItemId["+position+"]");
+//		AppLog.debug("", "Update the list...");
+        return position;
+    }
+
+
+    @SuppressWarnings({"unchecked"})
+    private <R extends ListItemView<T>> R getViewHolder(View view) {
+        return (R) view.getTag();
+    }
+
+
+    public View getView(int position, View convertView, ViewGroup parent) {
+//		AppLog.debug("ListViewAdapter", "GetView ["+position+"]");
+        ListItemView<T> holder;
+
+        if (convertView == null) {
+            convertView = layoutInflater.inflate(listItemLayout, null);
+
+            holder = this.createListItemView(aClass, convertView, data.get(position), delegate, position);
+
+            holder.initUIComponents();
+            convertView.setTag(holder);
+
+        } else {
+            holder = getViewHolder(convertView);
+        }
+
+        convertView.setBackgroundResource(normalBackgroundID);
+        holder.updateListItemView(data.get(position), position);
+
+        // When occurs an update (add or delete a row) we need
+        // to update our selectedView
+        if (selectedPosition == position) {
+            convertView.setBackgroundResource(selectedBackgroundID);
+
+            if (makeSelection) {
+                makeSelection = false;
+                holder.selectListItemView();
+            } else {
+                holder.selectListItemViewUI();
+            }
+
+            selectedView = convertView;
+        }
+
+        convertView.setOnClickListener(new OnListItemClickListener(position));
+        return convertView;
+    }
+
+
+    private class OnListItemClickListener implements View.OnClickListener {
+        private int position;
+
+        public OnListItemClickListener(int position) {
+            this.position = position;
+        }
+
+        public void onClick(View view) {
+//			AppLog.debug("ListViewAdapter", "OnItemListClickListener ["+position+"]");
+
+            if (selectedView != null) {
+//				AppLog.warning("", "SelectedView must be deselect ["+selectedPosition+"]");
+                selectedView.setBackgroundResource(normalBackgroundID);
+                ListItemView<T> selectedListItemView = getViewHolder(selectedView);
+                selectedListItemView.deselectListItemViewUI();
+            } else {
+//				AppLog.warning("", "SelectedView is null!");
+            }
+
+            view.setBackgroundResource(selectedBackgroundID);
+            ListItemView<T> listItemView = getViewHolder(view);
+            listItemView.selectListItemView();
+
+            selectedPosition = position;
+            selectedView = view;
+        }
+    }
+}

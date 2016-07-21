@@ -1,0 +1,128 @@
+package com.negorp.commons.util;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class JsonUtil {
+    private final static String DEBUG_TAG = "JsonUtil";
+    private final static String DOUBLE_QUOTE = "\"";
+
+
+    public static String toJsonFormat(String name, List<JsonObjectInterface> jsonObjectInterfaces) {
+        String jsonString = new String();
+        jsonString += ("{" + DOUBLE_QUOTE + name + DOUBLE_QUOTE + ": [");
+
+        JSONObject jsonObject;
+        for (JsonObjectInterface jsonObjectInterface : jsonObjectInterfaces) {
+            jsonObject = jsonObjectInterface.toJSONObject();
+            jsonString += jsonObject.toString();
+        }
+        jsonString += "]}";
+
+        return jsonString;
+    }
+
+
+    public static <A> List<A> getObjectsFromJsonFormat(String jsonFormat, Class<?> aClass) {
+        List<A> list = new ArrayList<A>();
+        String name = extractName(jsonFormat);
+
+        try {
+            JSONObject json = new JSONObject(jsonFormat);
+            JSONArray jsonArray = json.getJSONArray(name);
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jso = jsonArray.getJSONObject(i);
+
+                Field[] fields = aClass.getDeclaredFields();
+                int length = fields.length;
+                Object[] values = new Object[length];
+
+                int index = 0;
+                for (Field field : fields) {
+                    Class<?> fieldType = field.getType();
+                    String fieldName = field.getName();
+
+                    if (fieldType.equals(String.class)) {
+                        values[index] = jso.getString(fieldName);
+                    } else if (Integer.TYPE.equals(fieldType)) {
+                        values[index] = jso.getInt(fieldName);
+                    } else if (Long.TYPE.equals(fieldType)) {
+                        values[index] = jso.getLong(fieldName);
+                    } else if (Double.TYPE.equals(fieldType)) {
+                        values[index] = jso.getDouble(fieldName);
+                    } else if (Boolean.TYPE.equals(fieldType)) {
+                        values[index] = jso.getBoolean(fieldName);
+                    }
+
+                    //Float.TYPE.equals(fieldType)
+                    //Byte.TYPE.equals(fieldType)
+                    //Short.TYPE.equals(fieldType)
+                    //Boolean.TYPE.equals(fieldType)
+                    //Character.TYPE.equals(fieldType)
+
+                    index++;
+                }
+
+                A object = createObject(aClass, values);
+                list.add(object);
+            }
+        } catch (Exception exception) {
+            AppLog.error(DEBUG_TAG, exception);
+        }
+
+        return list;
+    }
+
+
+    public static String extractName(String jsonFormat) {
+        int length = jsonFormat.length();
+        int index1 = 0;
+        int index2 = 0;
+
+        for (int i = 0; i < length; i++) {
+            if (index1 == 0) {
+                if (jsonFormat.charAt(i) == '"') {
+                    index1 = i;
+                }
+            } else {
+                if (jsonFormat.charAt(i) == '"') {
+                    index2 = i;
+                    break;
+                }
+            }
+        }
+
+        String name = null;
+        if (index1 > 0 && index2 > 0) {
+            name = jsonFormat.substring(index1 + 1, index2);
+        }
+
+        return name;
+    }
+
+
+    @SuppressWarnings("unchecked")
+    private static <A> A createObject(Class<?> aClass, Object... values) {
+        try {
+            Constructor<?>[] constructors = aClass.getDeclaredConstructors();
+
+            return (A) constructors[0].newInstance(values);
+        } catch (InstantiationException ex) {
+            System.err.println("InstantiationException");
+        } catch (IllegalAccessException ex) {
+            System.err.println("IllegalAccessException");
+        } catch (IllegalArgumentException ex) {
+            System.err.println("IllegalArgumentException");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+}

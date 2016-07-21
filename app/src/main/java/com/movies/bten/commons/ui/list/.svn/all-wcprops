@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/negorp/commons.svn/!svn/ver/1/src/com/negorp/commons/ui/list
+END
+ListViewAdapter.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/negorp/commons.svn/!svn/ver/1/src/com/negorp/commons/ui/list/ListViewAdapter.java
+END
+ListItemViewDelegate.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/negorp/commons.svn/!svn/ver/1/src/com/negorp/commons/ui/list/ListItemViewDelegate.java
+END
+ListItemView.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/negorp/commons.svn/!svn/ver/1/src/com/negorp/commons/ui/list/ListItemView.java
+END
+OnListKeyListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/negorp/commons.svn/!svn/ver/1/src/com/negorp/commons/ui/list/OnListKeyListener.java
+END

@@ -1,4 +1,4 @@
-package com.movies.bottom10;
+package com.movies.bten;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

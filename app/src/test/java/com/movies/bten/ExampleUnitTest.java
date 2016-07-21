@@ -1,4 +1,4 @@
-package com.movies.bottom10;
+package com.movies.bten;
 
 import org.junit.Test;
 

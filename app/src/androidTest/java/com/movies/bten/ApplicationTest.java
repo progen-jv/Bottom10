@@ -1,4 +1,4 @@
-package com.movies.bottom10;
+package com.movies.bten;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

@@ -1,0 +1,121 @@
+package com.negorp.commons.util;
+
+
+import com.negorp.commons.R;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+
+public class TimeFormatUtil {
+
+    static TimeFormatUtil instance;
+    DateFormat df;
+    Date currentDate;
+    Calendar rightNow = Calendar.getInstance();
+    Calendar paramTime = Calendar.getInstance();
+
+    public TimeFormatUtil() {
+        df = new SimpleDateFormat("yyyy-MM-dd");
+    }
+
+    public static TimeFormatUtil getInstance() {
+        if (instance == null)
+            instance = new TimeFormatUtil();
+        return instance;
+    }
+
+    public String getDayofTheWeek(Date date, int addday) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        int dayoftheweek = c.get(Calendar.DAY_OF_WEEK) + addday;
+        if (dayoftheweek > 7)
+            dayoftheweek = dayoftheweek - 7;
+
+        switch (dayoftheweek) {
+            case Calendar.MONDAY:
+                return ResourcesUtil.getString(R.string.Monday);
+            case Calendar.TUESDAY:
+                return ResourcesUtil.getString(R.string.Tuesday);
+            case Calendar.WEDNESDAY:
+                return ResourcesUtil.getString(R.string.Wednesday);
+            case Calendar.THURSDAY:
+                return ResourcesUtil.getString(R.string.Thursday);
+            case Calendar.FRIDAY:
+                return ResourcesUtil.getString(R.string.Friday);
+            case Calendar.SATURDAY:
+                return ResourcesUtil.getString(R.string.Saturday);
+            case Calendar.SUNDAY: {
+                return ResourcesUtil.getString(R.string.Sunday);
+            }
+            default:
+                return ResourcesUtil.getString(R.string.Today);
+        }
+
+
+    }
+
+    public String formatString(String stringtoformat,
+                               String currentpattern,
+                               String newpattern) {
+
+        Date param;
+        try {
+            DateFormat df;
+            df = new SimpleDateFormat(currentpattern);
+            param = df.parse(stringtoformat);
+
+            SimpleDateFormat sdf = new SimpleDateFormat(newpattern);
+            String ret = sdf.format(param);
+            return ret.toString();
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return stringtoformat;
+
+    }
+
+    public boolean isToday(long time, long currentTime) {
+
+        paramTime.setTimeInMillis(time);
+        rightNow.setTimeInMillis(currentTime);
+
+        //if today or less than today
+        if ((rightNow.get(Calendar.YEAR) == paramTime.get(Calendar.YEAR)) &&
+                (rightNow.get(Calendar.MONTH) == paramTime.get(Calendar.MONTH)) &&
+                (rightNow.get(Calendar.DAY_OF_MONTH) == paramTime.get(Calendar.DAY_OF_MONTH))) {
+
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isToday(String timeString, int adddays) {
+
+        try {
+            currentDate = new Date(System.currentTimeMillis() + (adddays * 24 * 60 * 60 * 1000));
+            Date param = df.parse(timeString);
+
+            rightNow.setTime(currentDate);
+            paramTime.setTime(param);
+
+            //if today or less than today
+            if ((rightNow.get(Calendar.YEAR) == paramTime.get(Calendar.YEAR)) &&
+                    (rightNow.get(Calendar.MONTH) == paramTime.get(Calendar.MONTH)) &&
+                    (rightNow.get(Calendar.DAY_OF_MONTH) == paramTime.get(Calendar.DAY_OF_MONTH)))
+                return true;
+            if (param.before(currentDate))
+                return true;
+
+        } catch (Exception e) {
+
+        }
+        return false;
+
+
+    }
+}

@@ -1,0 +1,41 @@
+package com.negorp.commons.ui.list;
+
+import android.view.KeyEvent;
+import android.view.View;
+import com.negorp.commons.util.AppLog;
+
+
+public class OnListKeyListener implements View.OnKeyListener {
+    private ListViewAdapter<?, ? extends ListItemView<?>> listViewAdapter;
+
+    public OnListKeyListener(ListViewAdapter<?, ? extends ListItemView<?>> listViewAdapter) {
+        this.listViewAdapter = listViewAdapter;
+    }
+
+
+    public boolean onKey(View view, int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_DPAD_UP: {
+                AppLog.info("", "*** UP");
+                listViewAdapter.previousListItem();
+            }
+
+            case KeyEvent.KEYCODE_DPAD_DOWN: {
+                AppLog.info("", "*** DOWN");
+                listViewAdapter.nextListItem();
+            }
+
+            case KeyEvent.KEYCODE_DPAD_CENTER: {
+                AppLog.info("", "*** CENTER");
+
+            }
+
+            case KeyEvent.KEYCODE_ENTER: {
+                AppLog.info("", "*** ENTER");
+
+            }
+        }
+
+        return true;
+    }
+}
