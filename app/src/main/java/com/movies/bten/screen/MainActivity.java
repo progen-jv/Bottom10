@@ -1,4 +1,4 @@
-package com.movies.bten;
+package com.movies.bten.screen;
 
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
@@ -17,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
+import com.movies.bten.R;
 import com.movies.bten.commons.Constants;
 import com.movies.bten.commons.ui.list.ListViewAdapter;
 import com.movies.bten.utils.http.VolleyUtils;

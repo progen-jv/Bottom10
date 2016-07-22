@@ -3,6 +3,7 @@
     <string name="top_10">Top 10</string>
     <string name="bottom_10">Bottom 10</string>
     <string name="year">Year</string>
+    <string name="app_desc">the bottom !0 Movies</string>
 
     <string-array name="years_array">
         <item>2016</item>

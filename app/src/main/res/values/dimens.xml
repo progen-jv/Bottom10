@@ -41,7 +41,7 @@
     <dimen name="txt_small">12sp</dimen>
     <dimen name="txt_medium">14sp</dimen>
     <dimen name="txt_large">18sp</dimen>
-    <dimen name="txt_x_large">20sp</dimen>
+    <dimen name="txt_x_large">24sp</dimen>
     <dimen name="txt_xx_large">40sp</dimen>
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="fab_margin">16dp</dimen>

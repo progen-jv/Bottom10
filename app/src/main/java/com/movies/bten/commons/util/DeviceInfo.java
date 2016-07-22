@@ -6,8 +6,14 @@ import android.app.ActivityManager.RunningTaskInfo;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.*;
+import android.content.pm.ActivityInfo;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Debug;
 import android.os.Environment;
@@ -575,6 +581,20 @@ public class DeviceInfo {
             }
             if (externalStorageAvailable && externalStorageWriteable) return true;
             return false;
+        } catch (Exception ex) {
+            AppLog.error(DEBUG_TAG, ex);
+            return false;
+        }
+    }
+
+    public boolean isConnected() {
+        try {
+            ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+            boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+
+            return isConnected;
         } catch (Exception ex) {
             AppLog.error(DEBUG_TAG, ex);
             return false;
