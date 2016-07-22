@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/spinner_genre"
+        android:title="Year"
+        android:icon="@drawable/abc_ab_share_pack_mtrl_alpha"
+        app:showAsAction="always"
+        app:actionViewClass="android.widget.Spinner" />
+
+    <item
+        android:id="@+id/spinner_year"
+        android:title="@string/year"
+        android:icon="@drawable/abc_ab_share_pack_mtrl_alpha"
+        app:showAsAction="always"
+        app:actionViewClass="android.widget.Spinner" />
+
+    <item
+        android:id="@+id/action_top"
+        android:title="@string/top_10"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_bottom"
+        android:title="@string/bottom_10"
+        app:showAsAction="never" />
+</menu>

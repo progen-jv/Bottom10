@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">b!0</string>
+    <string name="top_10">Top 10</string>
+    <string name="bottom_10">Bottom 10</string>
+    <string name="year">Year</string>
 
     <string-array name="years_array">
         <item>2016</item>
@@ -18,5 +21,12 @@
         <item>2011</item>
         <item>2010</item>
         <item>2009</item>
+    </string-array>
+
+    <string-array name="genre_arry">
+        <item>Action</item>
+        <item>Comedy</item>
+        <item>Science Fiction</item>
+        <item>Adventure</item>
     </string-array>
 </resources>
