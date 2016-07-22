@@ -1,6 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">@color/orange</color>
+    <color name="colorPrimaryDark">@color/golden_yellow</color>
     <color name="colorAccent">#FF4081</color>
+
+    #From commons
+    <color name="blue">#00395D</color>
+    <color name="dark_grey">#666666</color>
+    <color name="black">#000000</color>
+    <color name="orange">#DC630A</color>
+    <color name="red">#CC3333</color>
+    <color name="green">#72A309</color>
+    <color name="yellow">#FFCF01</color>
+    <color name="purple">#820053</color>
+    <color name="light_blue">#2cadf7</color>
+
+
+    <color name="list_item_normal_background">#F4F4F4</color>
+    <color name="list_item_selected_background">#E0E0E0</color>
+    <color name="list_item_separator">#BFC0BE</color>
+
+    <color name="bg_white">#FFFFFF</color>
+    <color name="bg_black">#000000</color>
+
+    <color name="black_grey">#1e1e1e</color>
+    <color name="medium_grey">#585c64</color>
+    <color name="light_grey">#dedfdf</color>
+    <color name="light_slate">#828796</color>
+    <color name="golden_yellow">#bb6f04</color>
+    <color name="dark_night">#111113</color>
+    <color name="dark_night_with_alpha">#80111113</color>
+    <color name="blue_transparent">#900e97e5</color>
+
+    <!--+++++++++++++++++++++++++ Text ++++++++++++++++++++++++++-->
+    <color name="text_black">#000000</color>
+    <color name="text_dark_gray">#1E1E1E</color>
+    <color name="text_gray">#828796</color>
+    <color name="text_light_gray">#E0E0E0</color>
+    <color name="text_white">#FFFFFF</color>
+    <color name="text_orange">#bb6f04</color>
+    <color name="text_red">#FF0000</color>
+    <color name="text_light_green">#A7FC63</color>
+    <color name="text_green">#007F0E</color>
+    <color name="text_dark_green">#114802</color>
 </resources>

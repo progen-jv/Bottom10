@@ -2,4 +2,48 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="movie_item_height">155dp</dimen>
+    <dimen name="movie_item_width">130dp</dimen>
+
+
+    #From commons
+    <!-- paddings -->
+    <dimen name="padding_extra_small">1dp</dimen>
+    <dimen name="padding_small">3dp</dimen>
+    <dimen name="padding_normal">5dp</dimen>
+    <dimen name="padding_large">8dp</dimen>
+    <dimen name="padding_extra_large">15dp</dimen>
+    <dimen name="padding_button_normal">15dp</dimen>
+    <dimen name="padding_button_left">15dp</dimen>
+    <dimen name="padding_button_right">15dp</dimen>
+    <dimen name="padding_button_top">10dp</dimen>
+    <dimen name="padding_button_bottom">10dp</dimen>
+    <dimen name="padding_button_panel">2dp</dimen>
+    <dimen name="padding_layout_small">5dp</dimen>
+    <dimen name="padding_layout_medium">10dp</dimen>
+    <dimen name="padding_layout_large">15dp</dimen>
+
+    <!-- margin -->
+    <dimen name="margin_extra_small">1dp</dimen>
+    <dimen name="margin_small">2dp</dimen>
+    <dimen name="margin_normal">5dp</dimen>
+    <dimen name="margin_large">8dp</dimen>
+    <dimen name="margin_extra_large">12dp</dimen>
+    <dimen name="margin_xxlarge">15dp</dimen>
+    <dimen name="margin_xxxxlarge">45dp</dimen>
+    <dimen name="margin_gallery_left">17dp</dimen>
+
+    <dimen name="line_height">1dp</dimen>
+    <dimen name="divider_height">1dp</dimen>
+    <dimen name="list_item_height">45dp</dimen>
+    <dimen name="movie_list_item_height">145dp</dimen>
+
+    <dimen name="txt_small">12sp</dimen>
+    <dimen name="txt_medium">14sp</dimen>
+    <dimen name="txt_large">18sp</dimen>
+    <dimen name="txt_x_large">20sp</dimen>
+    <dimen name="txt_xx_large">40sp</dimen>
+    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 </resources>
