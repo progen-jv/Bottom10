@@ -11,6 +11,7 @@ public class AppMain extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        _appInstance = this;
     }
 
     @Override

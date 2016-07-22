@@ -25,4 +25,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.1'
     compile project(path: ':volley')
     compile 'com.google.code.gson:gson:2.7'
+
 }

@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <ImageView
+        <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/img_poster"
             android:layout_width="@dimen/movie_item_width"
             android:layout_height="@dimen/movie_item_height"
