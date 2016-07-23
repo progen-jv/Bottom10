@@ -1,5 +1,6 @@
 package com.movies.bten.screen;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -19,7 +20,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.movies.bten.R;
 import com.movies.bten.commons.Constants;
+import com.movies.bten.commons.ui.adapter.GenreAdapter;
 import com.movies.bten.commons.ui.list.ListViewAdapter;
+import com.movies.bten.commons.util.MessageUtil;
+import com.movies.bten.commons.util.ResourcesUtil;
 import com.movies.bten.utils.http.DataHolder;
 import com.movies.bten.utils.http.VolleyUtils;
 import com.movies.bten.view.MovieListItemView;
@@ -30,7 +34,10 @@ import com.movies.bten.view.data.Result;
 public class MainActivity extends AppCompatActivity {
     private ListView moviesList;
     private ListViewAdapter<Result, MovieListItemView<Result>> listViewAdapter;
-    private MovieList movieList;
+    private static int searchGenre;
+    private static int searchYear;
+    private static int searchOrder;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolBarMain);
         setSupportActionBar(myToolbar);
 
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Processing your request, please wait");
         this.loadMovieList();
     }
 
@@ -52,12 +62,13 @@ public class MainActivity extends AppCompatActivity {
 
         MenuItem yearItem = menu.findItem(R.id.spinner_year);
         Spinner yearSpinner = (Spinner) MenuItemCompat.getActionView(yearItem);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.years_array, android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this, R.layout.item_genre, R.id.txtGenreName, DataHolder.getInstance().getYearList());
         yearSpinner.setAdapter(adapter);
         yearSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
+                searchYear = DataHolder.getInstance().getYearList().get(i);
+                loadMovies();
             }
 
             @Override
@@ -66,14 +77,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /* Load the genres drop down */
         MenuItem genreItem = menu.findItem(R.id.spinner_genre);
         Spinner genreSpinner = (Spinner) MenuItemCompat.getActionView(genreItem);
-        ArrayAdapter<CharSequence> genreAdapter = ArrayAdapter.createFromResource(this, R.array.genre_arry, android.R.layout.simple_spinner_dropdown_item);
+        GenreAdapter genreAdapter = new GenreAdapter(this, DataHolder.getInstance().getGenres().getGenres());
         genreSpinner.setAdapter(genreAdapter);
         genreSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
+                searchGenre = DataHolder.getInstance().getGenres().getGenres().get(i).getId();
+                loadMovies();
             }
 
             @Override
@@ -89,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
         Class<MovieListItemView<Result>> aClass = (Class<MovieListItemView<Result>>) (Class<?>) MovieListItemView.class;
 
         moviesList = (ListView) findViewById(R.id.list_movies);
-        listViewAdapter = new ListViewAdapter<Result, MovieListItemView<Result>>(this, aClass, movieListItemViewDelegate,
+        listViewAdapter = new ListViewAdapter<>(this, aClass, movieListItemViewDelegate,
                 R.layout.movie_list_item, DataHolder.getInstance().getMovieList().getResults(),
                 android.R.color.transparent, android.R.color.transparent);
         moviesList.setAdapter(listViewAdapter);
@@ -97,17 +110,23 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadMovies() {
         try {
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, Constants.BASE_URL, new Response.Listener<String>() {
+            progressDialog.show();
+            String url = String.format(Constants.DISCOVER_URL, searchYear, searchGenre);
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
+                    progressDialog.dismiss();
                     Gson gson = new Gson();
-                    movieList = gson.fromJson(response, MovieList.class);
-                    loadMovieList();
+                    MovieList movies = gson.fromJson(response, MovieList.class);
+                    DataHolder.getInstance().getMovieList().getResults().clear();
+                    DataHolder.getInstance().getMovieList().getResults().addAll(movies.getResults());
+                    listViewAdapter.notifyDataSetChanged();
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-
+                    progressDialog.dismiss();
+                    MessageUtil.showMessage(ResourcesUtil.getString(R.string.error), true);
                 }
             });
             VolleyUtils.getInstance(this).addToRequestQueue(stringRequest);

@@ -18,10 +18,10 @@ import com.movies.bten.R;
 import com.movies.bten.commons.Constants;
 import com.movies.bten.commons.util.DeviceInfo;
 import com.movies.bten.commons.util.MessageUtil;
+import com.movies.bten.commons.util.ResourcesUtil;
 import com.movies.bten.utils.http.DataHolder;
 import com.movies.bten.utils.http.VolleyUtils;
 import com.movies.bten.view.data.Genres;
-import com.movies.bten.view.data.MovieList;
 
 public class SplashScreenActivity extends AppCompatActivity implements Animation.AnimationListener {
     private ImageView imgLogo;
@@ -52,6 +52,8 @@ public class SplashScreenActivity extends AppCompatActivity implements Animation
         descAnimation.setAnimationListener(this);
 
         imgLogo.startAnimation(circleAnimation);
+
+        DataHolder.getInstance().populateYears();
     }
 
     @Override
@@ -62,7 +64,6 @@ public class SplashScreenActivity extends AppCompatActivity implements Animation
     @Override
     public void onAnimationEnd(Animation animation) {
         if (animation == circleAnimation) {
-
             txtAppName.startAnimation(logoAnimation);
         } else if (animation == logoAnimation) {
             new Handler().postDelayed(new Runnable() {
@@ -93,34 +94,12 @@ public class SplashScreenActivity extends AppCompatActivity implements Animation
                 public void onResponse(String response) {
                     Gson gson = new Gson();
                     DataHolder.getInstance().setGenres(gson.fromJson(response, Genres.class));
-                    loadMovies(DataHolder.getInstance().getGenres().getGenres().get(0).getId());
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    MessageUtil.showMessage("Error", true);
-                }
-            });
-            VolleyUtils.getInstance(this).addToRequestQueue(stringRequest);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    private void loadMovies(int genreId) {
-        try {
-            String url = String.format(Constants.DISCOVER_URL, 2016, genreId);
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    Gson gson = new Gson();
-                    DataHolder.getInstance().setMovieList(gson.fromJson(response, MovieList.class));
                     showMainScreen();
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-
+                    MessageUtil.showMessage(ResourcesUtil.getString(R.string.error), true);
                 }
             });
             VolleyUtils.getInstance(this).addToRequestQueue(stringRequest);
@@ -128,6 +107,7 @@ public class SplashScreenActivity extends AppCompatActivity implements Animation
             ex.printStackTrace();
         }
     }
+
 
     private void showMainScreen() {
         try {

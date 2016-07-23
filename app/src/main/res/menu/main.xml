@@ -4,15 +4,13 @@
 
     <item
         android:id="@+id/spinner_genre"
-        android:title="Year"
-        android:icon="@drawable/abc_ab_share_pack_mtrl_alpha"
+        android:title="Genre"
         app:showAsAction="always"
         app:actionViewClass="android.widget.Spinner" />
 
     <item
         android:id="@+id/spinner_year"
         android:title="@string/year"
-        android:icon="@drawable/abc_ab_share_pack_mtrl_alpha"
         app:showAsAction="always"
         app:actionViewClass="android.widget.Spinner" />
 

@@ -5,6 +5,7 @@ import android.app.Application;
 import com.movies.bten.commons.util.AppLog;
 import com.movies.bten.commons.util.DeviceInfo;
 import com.movies.bten.commons.util.MessageUtil;
+import com.movies.bten.commons.util.ResourcesUtil;
 
 /**
  * Created by Progen on 22/7/16.
@@ -22,6 +23,7 @@ public class AppMain extends Application {
         DeviceInfo.initializeDeviceInfo(getApplicationContext());
         AppLog.initializeAppLog(isLogEnabled);
         MessageUtil.initializeMesageUtil(getApplicationContext());
+        ResourcesUtil.initializeResourcesUtil(getResources());
     }
 
     @Override
