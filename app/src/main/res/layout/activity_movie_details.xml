@@ -174,12 +174,12 @@
                         android:background="@drawable/line_separator"></View>
 
                     <TextView
-                        android:id="@+id/txtCasts"
+                        android:id="@+id/txtGenres"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_normal"
                         android:padding="@dimen/padding_normal"
-                        android:text="@string/loading" />
+                        android:text="" />
 
                     <View
                         android:layout_width="match_parent"
@@ -187,34 +187,14 @@
                         android:background="@drawable/line_separator"></View>
 
                     <TextView
-                        android:id="@+id/txtOther"
+                        android:id="@+id/txtCasts"
                         android:layout_width="wrap_content"
                         android:padding="@dimen/padding_normal"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_normal"
-                        android:text="Others" />
+                        android:text="@string/loading" />
                 </LinearLayout>
 
-                <View
-                    android:id="@+id/separator1"
-                    android:layout_width="fill_parent"
-                    android:layout_height="@dimen/divider_height"
-                    android:layout_marginBottom="2dp"
-                    android:layout_marginLeft="@dimen/margin_normal"
-                    android:layout_marginRight="@dimen/margin_normal"
-                    android:background="@drawable/line_separator"
-                    android:fadingEdge="horizontal"
-                    android:fadingEdgeLength="20dp"
-                    android:visibility="gone" />
-
-
-                <LinearLayout
-                    android:id="@+id/moreDetails"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_normal"
-                    android:layout_marginRight="@dimen/margin_normal"
-                    android:orientation="vertical"></LinearLayout>
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

@@ -1,8 +1,10 @@
 package com.movies.bten.screen;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -22,6 +24,7 @@ import com.movies.bten.commons.util.ResourcesUtil;
 import com.movies.bten.utils.http.VolleyUtils;
 import com.movies.bten.view.data.Cast;
 import com.movies.bten.view.data.Casts;
+import com.movies.bten.view.data.Genre;
 import com.movies.bten.view.data.Movie;
 
 public class MovieDetailsActivity extends AppCompatActivity {
@@ -29,6 +32,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     public static final String MOVIE_ID = "MOVIE_ID";
     private int movieId;
     private ImageLoader mImageLoader;
+    private ProgressDialog progressDialog;
 
     private TextView txtTitle;
     private TextView txtSynopsis;
@@ -38,6 +42,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private RatingBar ratingBar;
     private NetworkImageView imgPoster;
     private TextView txtCasts;
+    private TextView txtGenres;
 
 
     @Override
@@ -67,6 +72,11 @@ public class MovieDetailsActivity extends AppCompatActivity {
         txtRuntime = (TextView) findViewById(R.id.txtRuntime);
         ratingBar = (RatingBar) findViewById(R.id.ratingMovie);
         txtCasts = (TextView) findViewById(R.id.txtCasts);
+        txtGenres = (TextView) findViewById(R.id.txtGenres);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage(ResourcesUtil.getString(R.string.processing));
 
         this.fetchMovieDetails();
         this.getCastAndCrew();
@@ -75,12 +85,13 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     private void fetchMovieDetails() {
         try {
+            progressDialog.show();
             String url = String.format(Constants.DETAILS_URL, movieId);
             AppLog.debug("Details URL", url);
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-//                    progressDialog.dismiss();
+                    progressDialog.dismiss();
                     Gson gson = new Gson();
                     Movie movie = gson.fromJson(response, Movie.class);
                     populateUIElements(movie);
@@ -88,7 +99,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-//                    progressDialog.dismiss();
+                    progressDialog.dismiss();
                     MessageUtil.showMessage(ResourcesUtil.getString(R.string.error), true);
                 }
             });
@@ -101,13 +112,14 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     private void populateUIElements(Movie movie) {
         imgPoster.setImageUrl(Constants.IMAGE_BASE + movie.getPosterPath(), mImageLoader);
-        imgPoster.setErrorImageResId(R.drawable.list_item_selected);
+        imgPoster.setErrorImageResId(R.mipmap.missing_media);
         txtTitle.setText(movie.getTitle());
         txtSynopsis.setText(movie.getOverview());
         ratingBar.setRating(movie.getVoteAverage());
         txtVotes.setText(movie.getVoteCount() + " votes");
-        txtRelease.setText("Released on: " + movie.getReleaseDate());
+        txtRelease.setText(Html.fromHtml("<b>Released on:</b> " + movie.getReleaseDate()));
         txtRuntime.setText(movie.getRuntime() + " mins");
+        txtGenres.setText(Html.fromHtml(getGenres(movie)));
     }
 
     private void getCastAndCrew() {
@@ -119,7 +131,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 public void onResponse(String response) {
                     Gson gson = new Gson();
                     Casts casts = gson.fromJson(response, Casts.class);
-                    txtCasts.setText(getTopCasts(casts, 15));
+                    txtCasts.setText(Html.fromHtml(getTopCasts(casts, 15)));
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -135,18 +147,35 @@ public class MovieDetailsActivity extends AppCompatActivity {
     }
 
     private String getTopCasts(Casts casts, int howMany) {
-        StringBuilder strCast = new StringBuilder("Casts: ");
+        StringBuilder strCast = new StringBuilder("<b>Casts:</b>");
         try {
             int count = 0;
             for (Cast cast : casts.getCast()) {
                 if (count < howMany) {
-                    strCast.append(cast.getName()).append(", ");
+                    strCast.append(" ").append(cast.getName()).append(",");
                 }
             }
-            return strCast.substring(0, strCast.length() - 2);
+            strCast.trimToSize();
+            strCast.deleteCharAt(strCast.length() - 1);
+            return strCast.toString();
         } catch (Exception ex) {
             AppLog.error(TAG, ex);
             return "Unknown";
+        }
+    }
+
+    private String getGenres(Movie movie) {
+        StringBuilder strGenre = new StringBuilder("<b>Genre:</b> ");
+        try {
+            for (Genre genre : movie.getGenres()) {
+                strGenre.append(" ").append(genre.getName()).append(",");
+            }
+            strGenre.trimToSize();
+            strGenre.deleteCharAt(strGenre.length() - 1);
+            return strGenre.toString();
+        } catch (Exception ex) {
+            AppLog.error(TAG, ex);
+            return "NA";
         }
     }
 }

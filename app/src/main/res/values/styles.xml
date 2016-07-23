@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:actionButtonStyle">@style/AppActionButtonStyle</item>
     </style>
 
     <style name="AppTheme.Icon">
@@ -22,6 +23,11 @@
     <style name="AppTheme.Icon.Big">
         <item name="android:layout_width">150dp</item>
         <item name="android:layout_height">150dp</item>
+    </style>
+
+    <style name="AppActionButtonStyle" parent="AppTheme">
+        <item name="android:minWidth">20dp</item>
+        <item name="android:paddingRight">20dp</item>
     </style>
 
 </resources>

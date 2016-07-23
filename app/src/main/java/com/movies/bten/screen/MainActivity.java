@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Processing your request, please wait");
+        progressDialog.setMessage(ResourcesUtil.getString(R.string.processing));
         this.loadMovieList();
     }
 

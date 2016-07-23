@@ -1,5 +1,6 @@
 package com.movies.bten.view;
 
+import android.text.Html;
 import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -68,9 +69,9 @@ public class MovieListItemView<T> extends ListItemView<T> {
         imgPoster.setImageUrl(Constants.IMAGE_BASE + movie.getPosterPath(), mImageLoader);
         ratingBar.setRating(movie.getVoteAverage());
         txtNoOfVotes.setText(movie.getVoteCount() + " votes");
-        // TODO: Need to move the static text to xml elements
-        txtLanguage.setText("Language: " + Constants.getLangName(movie.getOriginalLanguage()));
-        txtReleaseDate.setText("Released on: " + movie.getReleaseDate());
+        // TODO: Not a good thing, need to move the static text to UI xml file
+        txtLanguage.setText(Html.fromHtml("<b>Language:</b> " + Constants.getLangName(movie.getOriginalLanguage())));
+        txtReleaseDate.setText(Html.fromHtml("<b>Released on:</b> " + movie.getReleaseDate()));
     }
 
 }

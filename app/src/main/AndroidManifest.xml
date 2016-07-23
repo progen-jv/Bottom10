@@ -17,12 +17,15 @@
             android:theme="@style/AppTheme.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".screen.MainActivity" />
-        <activity android:name=".screen.MovieDetailsActivity"></activity>
+        <activity android:name=".screen.MovieDetailsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.movies.bten.screen.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

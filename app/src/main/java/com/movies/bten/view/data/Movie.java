@@ -327,6 +327,7 @@ public class Movie {
      * @return The runtime
      */
     public Integer getRuntime() {
+        runtime = (runtime == null) ? 0 : runtime;
         return runtime;
     }
 
