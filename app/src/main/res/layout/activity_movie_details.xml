@@ -179,7 +179,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_normal"
                         android:padding="@dimen/padding_normal"
-                        android:text="Cast: Angelina, Paul " />
+                        android:text="@string/loading" />
 
                     <View
                         android:layout_width="match_parent"
@@ -189,6 +189,7 @@
                     <TextView
                         android:id="@+id/txtOther"
                         android:layout_width="wrap_content"
+                        android:padding="@dimen/padding_normal"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_normal"
                         android:text="Others" />
