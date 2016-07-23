@@ -1,10 +1,13 @@
 package com.movies.bten.screen;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -27,7 +30,7 @@ import com.movies.bten.view.data.Casts;
 import com.movies.bten.view.data.Genre;
 import com.movies.bten.view.data.Movie;
 
-public class MovieDetailsActivity extends AppCompatActivity {
+public class MovieDetailsActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = MovieDetailsActivity.class.getName();
     public static final String MOVIE_ID = "MOVIE_ID";
     private int movieId;
@@ -43,6 +46,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private NetworkImageView imgPoster;
     private TextView txtCasts;
     private TextView txtGenres;
+    private ImageView imgTrailer;
 
 
     @Override
@@ -73,9 +77,13 @@ public class MovieDetailsActivity extends AppCompatActivity {
         ratingBar = (RatingBar) findViewById(R.id.ratingMovie);
         txtCasts = (TextView) findViewById(R.id.txtCasts);
         txtGenres = (TextView) findViewById(R.id.txtGenres);
+        imgTrailer = (ImageView) findViewById(R.id.imgTrailer);
+
+        imgTrailer.setOnClickListener(this);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
         progressDialog.setMessage(ResourcesUtil.getString(R.string.processing));
 
         this.fetchMovieDetails();
@@ -176,6 +184,17 @@ public class MovieDetailsActivity extends AppCompatActivity {
         } catch (Exception ex) {
             AppLog.error(TAG, ex);
             return "NA";
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.imgTrailer:
+                Intent intent = new Intent(this, MovieTrailerActivity.class);
+                intent.putExtra(MovieTrailerActivity.TRAILER_URL, "http://www.mp4point.com/downloads/8feeca1a540b.mp4");
+                startActivity(intent);
+                break;
         }
     }
 }

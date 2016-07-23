@@ -44,7 +44,7 @@ public class SplashScreenActivity extends AppCompatActivity implements Animation
         /* Initialize the animation */
         circleAnimation = AnimationUtils.loadAnimation(this, R.anim.grow);
         logoAnimation = AnimationUtils.loadAnimation(SplashScreenActivity.this, R.anim.grow_fast);
-        descAnimation = AnimationUtils.loadAnimation(SplashScreenActivity.this, R.anim.abc_fade_in);
+        descAnimation = AnimationUtils.loadAnimation(SplashScreenActivity.this, android.R.anim.slide_in_left);
         descAnimation.setFillAfter(true);
 
         logoAnimation.setAnimationListener(this);
@@ -74,7 +74,7 @@ public class SplashScreenActivity extends AppCompatActivity implements Animation
             }, 500);
         } else if (animation == descAnimation) {
             if (!DeviceInfo.isConnected()) {
-                MessageUtil.showMessage("Your device is offline, please connect to internet", true);
+                MessageUtil.showMessage(ResourcesUtil.getString(R.string.no_network), true);
                 finish();
             } else {
                 this.loadGenres();
@@ -113,6 +113,7 @@ public class SplashScreenActivity extends AppCompatActivity implements Animation
         try {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+            finish();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
