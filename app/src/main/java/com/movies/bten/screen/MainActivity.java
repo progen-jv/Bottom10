@@ -22,6 +22,7 @@ import com.movies.bten.R;
 import com.movies.bten.commons.Constants;
 import com.movies.bten.commons.ui.adapter.GenreAdapter;
 import com.movies.bten.commons.ui.list.ListViewAdapter;
+import com.movies.bten.commons.util.AppLog;
 import com.movies.bten.commons.util.MessageUtil;
 import com.movies.bten.commons.util.ResourcesUtil;
 import com.movies.bten.utils.http.DataHolder;
@@ -119,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             progressDialog.show();
             String url = String.format(Constants.DISCOVER_URL, searchYear, searchGenre);
+            AppLog.debug("URL", url);
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {

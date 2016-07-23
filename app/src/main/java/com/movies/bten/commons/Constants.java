@@ -1,9 +1,15 @@
 package com.movies.bten.commons;
 
+import com.movies.bten.commons.util.AppLog;
+
+import java.util.Locale;
+
 /**
  * Created by Progen on 22/7/16.
  */
 public class Constants {
+    private static final String TAG = Constants.class.getName();
+
     public static final String API_KEY = "3286a767ba08915afee23cefadaa4f1a";
     public static final String BASE_URL = "https://api.themoviedb.org/3/";
     public static final String IMAGE_BASE = "https://image.tmdb.org/t/p/w370/";
@@ -22,4 +28,15 @@ public class Constants {
     //http://api.themoviedb.org/3/movie/253649?api_key=3286a767ba08915afee23cefadaa4f1a
     // - Credits
     //http://api.themoviedb.org/3/movie/118340/credits?api_key=3286a767ba08915afee23cefadaa4f1a
+
+    public static String getLangName(String code) {
+        try {
+            if (code == null || "".equals(code)) return "Unknown";
+            Locale locale = new Locale(code);
+            return locale.getDisplayName();
+        } catch (Exception ex) {
+            AppLog.error(TAG, ex);
+            return "Unknown";
+        }
+    }
 }

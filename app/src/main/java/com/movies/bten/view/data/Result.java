@@ -50,7 +50,7 @@ public class Result {
     private Boolean video;
     @SerializedName("vote_average")
     @Expose
-    private Double voteAverage;
+    private Float voteAverage;
 
     /**
      * @return The posterPath
@@ -237,14 +237,14 @@ public class Result {
     /**
      * @return The voteAverage
      */
-    public Double getVoteAverage() {
+    public Float getVoteAverage() {
         return voteAverage;
     }
 
     /**
      * @param voteAverage The vote_average
      */
-    public void setVoteAverage(Double voteAverage) {
+    public void setVoteAverage(Float voteAverage) {
         this.voteAverage = voteAverage;
     }
 

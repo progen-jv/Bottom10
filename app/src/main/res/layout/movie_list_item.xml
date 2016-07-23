@@ -35,7 +35,9 @@
                 android:ellipsize="marquee"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
+                android:textColor="@color/black_grey"
                 android:marqueeRepeatLimit="marquee_forever"
+                android:textSize="@dimen/txt_x_large"
                 android:maxLines="1"
                 android:scrollHorizontally="true"
                 android:singleLine="true" />
@@ -44,13 +46,14 @@
                 android:id="@+id/txtRating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="?android:attr/ratingBarStyleSmall"
                 android:layout_below="@+id/txtTitle"
                 android:layout_marginTop="@dimen/margin_normal"
                 android:isIndicator="true"
-                android:numStars="5" />
+                android:numStars="10" />
 
             <TextView
-                android:id="@+id/txtRuntime"
+                android:id="@+id/txtNoOfVotes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txtRating"
@@ -59,10 +62,10 @@
                 android:text=" " />
 
             <TextView
-                android:id="@+id/txtGenre"
+                android:id="@+id/txtLanguage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtRuntime"
+                android:layout_below="@+id/txtNoOfVotes"
                 android:layout_marginTop="@dimen/margin_normal"
                 android:layout_weight="1"
                 android:ellipsize="end"
@@ -73,7 +76,7 @@
                 android:id="@+id/txtReleaseDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtGenre"
+                android:layout_below="@+id/txtLanguage"
                 android:layout_marginTop="@dimen/margin_normal"
                 android:layout_weight="1"
                 android:text="" />

@@ -1,6 +1,7 @@
 package com.movies.bten.view;
 
 import android.view.View;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -19,12 +20,15 @@ import com.movies.bten.view.data.Result;
 public class MovieListItemView<T> extends ListItemView<T> {
     private NetworkImageView imgPoster;
     private TextView txtTitle;
-    ImageLoader mImageLoader;
+    private RatingBar ratingBar;
+    private TextView txtNoOfVotes;
+    private TextView txtLanguage;
+    private TextView txtReleaseDate;
+    private ImageLoader mImageLoader;
 
 
     public MovieListItemView(View convertView, T object, ListItemViewDelegate delegate, int position) {
         super(convertView, object, delegate, position);
-        System.out.println("AppMain.getInstance().getApplicationContext()>>>" + AppMain.getInstance().getApplicationContext());
         mImageLoader = VolleyUtils.getInstance(AppMain.getInstance().getApplicationContext()).getImageLoader();
     }
 
@@ -32,6 +36,10 @@ public class MovieListItemView<T> extends ListItemView<T> {
     public void initUIComponents() {
         imgPoster = findViewById(R.id.img_poster);
         txtTitle = findViewById(R.id.txtTitle);
+        ratingBar = findViewById(R.id.txtRating);
+        txtNoOfVotes = findViewById(R.id.txtNoOfVotes);
+        txtLanguage = findViewById(R.id.txtLanguage);
+        txtReleaseDate = findViewById(R.id.txtReleaseDate);
     }
 
     @Override
@@ -56,7 +64,13 @@ public class MovieListItemView<T> extends ListItemView<T> {
         super.updateListItemView(object, position);
         Result movie = getObject();
         txtTitle.setText(movie.getTitle());
+        imgPoster.setErrorImageResId(R.mipmap.missing_media);
         imgPoster.setImageUrl(Constants.IMAGE_BASE + movie.getPosterPath(), mImageLoader);
+        ratingBar.setRating(movie.getVoteAverage());
+        txtNoOfVotes.setText(movie.getVoteCount() + " votes");
+        // TODO: Need to move the static text to xml elements
+        txtLanguage.setText("Language: " + Constants.getLangName(movie.getOriginalLanguage()));
+        txtReleaseDate.setText("Released on: " + movie.getReleaseDate());
     }
 
 }

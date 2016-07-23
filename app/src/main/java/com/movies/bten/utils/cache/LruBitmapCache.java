@@ -24,12 +24,12 @@ public class LruBitmapCache extends LruCache<String, Bitmap>
 
     @Override
     public Bitmap getBitmap(String url) {
-        return null;
+        return get(url);
     }
 
     @Override
     public void putBitmap(String url, Bitmap bitmap) {
-
+        put(url, bitmap);
     }
 
     public static int getCacheSize(Context ctx) {
