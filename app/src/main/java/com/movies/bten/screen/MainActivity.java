@@ -46,8 +46,11 @@ public class MainActivity extends AppCompatActivity {
 
         moviesList = (ListView) findViewById(R.id.list_movies);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolBarMain);
-        setSupportActionBar(myToolbar);
+        Toolbar appToolbar = (Toolbar) findViewById(R.id.toolBarMain);
+        appToolbar.setTitle("");
+        appToolbar.setLogo(R.mipmap.ic_launcher);
+        setSupportActionBar(appToolbar);
+
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setIndeterminate(true);
@@ -62,8 +65,10 @@ public class MainActivity extends AppCompatActivity {
 
         MenuItem yearItem = menu.findItem(R.id.spinner_year);
         Spinner yearSpinner = (Spinner) MenuItemCompat.getActionView(yearItem);
-        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this, R.layout.item_genre, R.id.txtGenreName, DataHolder.getInstance().getYearList());
-        yearSpinner.setAdapter(adapter);
+        ArrayAdapter<Integer> yearAdapter = new ArrayAdapter<Integer>(this, R.layout.item_genre, R.id.txtGenreName, DataHolder.getInstance().getYearList());
+        yearAdapter.setDropDownViewResource(R.layout.spinner_drop_down);
+
+        yearSpinner.setAdapter(yearAdapter);
         yearSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -81,6 +86,8 @@ public class MainActivity extends AppCompatActivity {
         MenuItem genreItem = menu.findItem(R.id.spinner_genre);
         Spinner genreSpinner = (Spinner) MenuItemCompat.getActionView(genreItem);
         GenreAdapter genreAdapter = new GenreAdapter(this, DataHolder.getInstance().getGenres().getGenres());
+        genreAdapter.setDropDownViewResource(R.layout.spinner_drop_down);
+
         genreSpinner.setAdapter(genreAdapter);
         genreSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
