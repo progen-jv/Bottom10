@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private ListViewAdapter<Result, MovieListItemView<Result>> listViewAdapter;
     private static int searchGenre;
     private static int searchYear;
-    private static int searchOrder;
+    private static String sortOrder = "vote_count.asc";
     private ProgressDialog progressDialog;
 
     @Override
@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
 
+        /* Load the years spinner */
         MenuItem yearItem = menu.findItem(R.id.spinner_year);
         Spinner yearSpinner = (Spinner) MenuItemCompat.getActionView(yearItem);
         ArrayAdapter<Integer> yearAdapter = new ArrayAdapter<Integer>(this, R.layout.item_genre, R.id.txtGenreName, DataHolder.getInstance().getYearList());
@@ -105,6 +106,20 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_top:
+                sortOrder = "vote_count.desc";
+                break;
+            case R.id.action_bottom:
+                sortOrder = "vote_count.asc";
+                break;
+        }
+        loadMovies();
+        return super.onOptionsItemSelected(item);
+    }
+
     @SuppressWarnings("unchecked")
     private void loadMovieList() {
         Class<MovieListItemView<Result>> aClass = (Class<MovieListItemView<Result>>) (Class<?>) MovieListItemView.class;
@@ -112,14 +127,14 @@ public class MainActivity extends AppCompatActivity {
         moviesList = (ListView) findViewById(R.id.list_movies);
         listViewAdapter = new ListViewAdapter<>(this, aClass, movieListItemViewDelegate,
                 R.layout.movie_list_item, DataHolder.getInstance().getMovieList().getResults(),
-                android.R.color.transparent, android.R.color.transparent);
+                R.drawable.list_item_normal, R.drawable.list_item_selected);
         moviesList.setAdapter(listViewAdapter);
     }
 
     private void loadMovies() {
         try {
             progressDialog.show();
-            String url = String.format(Constants.DISCOVER_URL, searchYear, searchGenre);
+            String url = String.format(Constants.DISCOVER_URL, searchYear, searchGenre, sortOrder);
             AppLog.debug("URL", url);
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
