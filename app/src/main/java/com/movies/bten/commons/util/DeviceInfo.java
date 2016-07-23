@@ -587,7 +587,7 @@ public class DeviceInfo {
         }
     }
 
-    public boolean isConnected() {
+    public static boolean isConnected() {
         try {
             ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 

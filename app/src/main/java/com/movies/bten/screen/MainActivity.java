@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import com.movies.bten.R;
 import com.movies.bten.commons.Constants;
 import com.movies.bten.commons.ui.list.ListViewAdapter;
+import com.movies.bten.utils.http.DataHolder;
 import com.movies.bten.utils.http.VolleyUtils;
 import com.movies.bten.view.MovieListItemView;
 import com.movies.bten.view.MovieListItemViewDelegate;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolBarMain);
         setSupportActionBar(myToolbar);
 
-        this.loadMovies();
+        this.loadMovieList();
     }
 
 
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
         moviesList = (ListView) findViewById(R.id.list_movies);
         listViewAdapter = new ListViewAdapter<Result, MovieListItemView<Result>>(this, aClass, movieListItemViewDelegate,
-                R.layout.movie_list_item, movieList.getResults(),
+                R.layout.movie_list_item, DataHolder.getInstance().getMovieList().getResults(),
                 android.R.color.transparent, android.R.color.transparent);
         moviesList.setAdapter(listViewAdapter);
     }
@@ -101,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
                 public void onResponse(String response) {
                     Gson gson = new Gson();
                     movieList = gson.fromJson(response, MovieList.class);
-                    System.out.println("Movies>>>>" + movieList.getResults().size());
                     loadMovieList();
                 }
             }, new Response.ErrorListener() {
