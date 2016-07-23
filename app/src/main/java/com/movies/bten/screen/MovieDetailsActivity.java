@@ -109,6 +109,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements View.OnCl
                 public void onErrorResponse(VolleyError error) {
                     progressDialog.dismiss();
                     MessageUtil.showMessage(ResourcesUtil.getString(R.string.error), true);
+                    finish();
                 }
             });
             VolleyUtils.getInstance(this).addToRequestQueue(stringRequest);
