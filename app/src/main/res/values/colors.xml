@@ -14,7 +14,7 @@
     <color name="yellow">#FFCF01</color>
     <color name="purple">#820053</color>
     <color name="light_blue">#2cadf7</color>
-
+    <color name="item_separator">#BFC0BE</color>
 
     <color name="list_item_normal_background">#F4F4F4</color>
     <color name="list_item_selected_background">#E0E0E0</color>

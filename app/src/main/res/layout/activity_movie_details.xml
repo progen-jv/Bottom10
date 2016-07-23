@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_main"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolBarMain"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/toolBarMain"
+        android:background="@mipmap/background_panel"
+        android:orientation="vertical">
+
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/moviemain"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/padding_normal">
+
+                    <com.android.volley.toolbox.NetworkImageView
+                        android:id="@+id/imgPoster"
+                        android:layout_width="@dimen/movie_item_width"
+                        android:layout_height="@dimen/movie_item_height"
+                        android:layout_alignParentTop="true"
+                        android:paddingBottom="@dimen/margin_normal"
+                        android:paddingTop="@dimen/margin_normal" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_normal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txtTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_weight="1"
+                            android:ellipsize="marquee"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:marqueeRepeatLimit="marquee_forever"
+                            android:maxLines="1"
+                            android:scrollHorizontally="true"
+                            android:singleLine="true"
+                            android:text="Title"
+                            android:textColor="@color/black_grey"
+                            android:textSize="@dimen/txt_x_large" />
+
+                        <RatingBar
+                            android:id="@+id/ratingMovie"
+                            style="?android:attr/ratingBarStyleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:layout_alignBottom="@+id/titlemovie"
+                            android:layout_marginLeft="@dimen/margin_normal"
+                            android:layout_toLeftOf="@+id/imageView2"
+                            android:layout_weight="1"
+                            android:isIndicator="true"
+                            android:numStars="10" />
+
+                        <TextView
+                            android:id="@+id/txtNoOfVotes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_normal"
+                            android:padding="@dimen/padding_extra_small" />
+
+                        <TextView
+                            android:id="@+id/txtReleaseDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_normal"
+                            android:padding="@dimen/padding_extra_small" />
+
+                        <TextView
+                            android:id="@+id/txtRuntime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_normal"
+                            android:padding="@dimen/padding_extra_small" />
+
+                        <!-- Trailer layout -->
+                        <LinearLayout
+                            android:id="@+id/trailerHeading"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/margin_normal"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@mipmap/movie_trailer_icon" />
+
+                            <TextView
+                                android:id="@+id/trailer"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/margin_normal"
+                                android:text="View Trailer" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/synopsisHeading"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/margin_normal"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:id="@+id/txtSynopsis1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/margin_normal" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/separator"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/divider_height"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginLeft="@dimen/margin_normal"
+                    android:layout_marginRight="@dimen/margin_normal"
+                    android:background="@drawable/line_separator"
+                    android:fadingEdge="horizontal"
+                    android:fadingEdgeLength="20dp"
+                    android:visibility="gone" />
+
+
+                <LinearLayout
+                    android:id="@+id/moviecontents"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_normal"
+                    android:layout_marginRight="@dimen/margin_normal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txtSynopsis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_normal"
+                        android:padding="@dimen/padding_normal" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/line_height"
+                        android:background="@drawable/line_separator"></View>
+
+                    <TextView
+                        android:id="@+id/txtCasts"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_normal"
+                        android:padding="@dimen/padding_normal"
+                        android:text="Cast: Angelina, Paul " />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/line_height"
+                        android:background="@drawable/line_separator"></View>
+
+                    <TextView
+                        android:id="@+id/txtOther"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_normal"
+                        android:text="Others" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/separator1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/divider_height"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginLeft="@dimen/margin_normal"
+                    android:layout_marginRight="@dimen/margin_normal"
+                    android:background="@drawable/line_separator"
+                    android:fadingEdge="horizontal"
+                    android:fadingEdgeLength="20dp"
+                    android:visibility="gone" />
+
+
+                <LinearLayout
+                    android:id="@+id/moreDetails"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_normal"
+                    android:layout_marginRight="@dimen/margin_normal"
+                    android:orientation="vertical"></LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="15dp"
+        android:layout_alignParentBottom="true"
+        android:background="@mipmap/bg_panel_shadow" />
+</RelativeLayout>

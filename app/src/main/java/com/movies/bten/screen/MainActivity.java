@@ -1,6 +1,7 @@
 package com.movies.bten.screen;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -161,8 +162,14 @@ public class MainActivity extends AppCompatActivity {
 
     private MovieListItemViewDelegate movieListItemViewDelegate = new MovieListItemViewDelegate() {
         @Override
-        public void notifyMovieSelection(Result item) {
-
+        public void notifyMovieSelection(Result movie) {
+            showMovieDetailsScreen(movie);
         }
     };
+
+    private void showMovieDetailsScreen(Result movie) {
+        Intent intent = new Intent(this, MovieDetailsActivity.class);
+        intent.putExtra(MovieDetailsActivity.MOVIE_ID, movie.getId());
+        startActivity(intent);
+    }
 }
