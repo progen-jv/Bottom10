@@ -3,7 +3,7 @@
     <string name="top_10">Top 10</string>
     <string name="bottom_10">Bottom 10</string>
     <string name="year">Year</string>
-    <string name="app_desc">the bottom !0 Movies</string>
+    <string name="app_desc">the bottom 10 Movies</string>
     <string name="error">Something bad happened, please try again</string>
     <string name="loading">Loading...</string>
     <string name="processing">Processing your request, please wait</string>

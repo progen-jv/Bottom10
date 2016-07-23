@@ -3,6 +3,7 @@ package com.movies.bten.screen;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -192,9 +193,14 @@ public class MovieDetailsActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imgTrailer:
-                Intent intent = new Intent(this, MovieTrailerActivity.class);
-                intent.putExtra(MovieTrailerActivity.TRAILER_URL, "http://www.mp4point.com/downloads/8feeca1a540b.mp4");
-                startActivity(intent);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(MovieDetailsActivity.this, MovieTrailerActivity.class);
+                        intent.putExtra(MovieTrailerActivity.TRAILER_URL, "http://www.mp4point.com/downloads/8feeca1a540b.mp4");
+                        startActivity(intent);
+                    }
+                }, 100);
                 break;
         }
     }

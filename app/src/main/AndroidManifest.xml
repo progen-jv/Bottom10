@@ -28,7 +28,9 @@
                 android:value="com.movies.bten.screen.MainActivity" />
         </activity>
         <activity android:name=".screen.MovieTrailerActivity" />
-        <activity android:name=".screen.VideoPlayerActivity"></activity>
+        <activity
+            android:name=".screen.VideoPlayerActivity"
+            android:theme="@style/AppTheme.Video"></activity>
     </application>
 
 </manifest>
